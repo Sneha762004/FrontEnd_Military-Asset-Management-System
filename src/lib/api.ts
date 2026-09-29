@@ -84,9 +84,11 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   if (body !== undefined) headers['Content-Type'] = 'application/json';
   if (token) headers.Authorization = `Bearer ${token}`;
 
+    const API_BASE = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || '/api';
+
   let response: Response;
   try {
-    response = await fetch(`/api${path}${buildQuery(query)}`, {
+    response = await fetch(`${API_BASE}${path}${buildQuery(query)}`, {
       method,
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
