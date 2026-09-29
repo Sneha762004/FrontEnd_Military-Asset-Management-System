@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-field text-ink-100 font-sans antialiased;
+    /* A faint grid so empty panels still read as a deliberate layout. */
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(14, 165, 233, 0.07), transparent 45%),
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 32px 32px, 32px 32px;
+  }
+
+  /* Visible, consistent keyboard focus. Never remove it without a replacement. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-400 ring-offset-2 ring-offset-field;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-700;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-600;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-ink-700/70 bg-panel/80 shadow-card backdrop-blur-sm;
+  }
+
+  .card-header {
+    @apply flex flex-wrap items-center justify-between gap-3 border-b border-ink-700/70 px-5 py-4;
+  }
+
+  .card-title {
+    @apply text-sm font-semibold uppercase tracking-wider text-ink-200;
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wide text-ink-300;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-ink-600 bg-ink-900/70 px-3 py-2 text-sm text-ink-100
+           placeholder:text-ink-500 transition
+           focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500
+           disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .input-error {
+    @apply border-rose-500 focus:border-rose-500 focus:ring-rose-500;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium
+           transition active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50
+           disabled:active:translate-y-0;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-500 text-ink-950 hover:bg-accent-400 shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink-600 bg-ink-800/60 text-ink-100 hover:border-ink-500 hover:bg-ink-700/60;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-300 hover:bg-ink-800/60 hover:text-ink-100;
+  }
+
+  .btn-danger {
+    @apply btn border border-rose-500/40 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20;
+  }
+
+  .btn-sm {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .badge-neutral {
+    @apply badge bg-ink-700/60 text-ink-200;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-500/15 text-emerald-300 ring-1 ring-inset ring-emerald-500/30;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-500/15 text-amber-300 ring-1 ring-inset ring-amber-500/30;
+  }
+
+  .badge-danger {
+    @apply badge bg-rose-500/15 text-rose-300 ring-1 ring-inset ring-rose-500/30;
+  }
+
+  .badge-info {
+    @apply badge bg-accent-500/15 text-accent-400 ring-1 ring-inset ring-accent-500/30;
+  }
+
+  .th {
+    @apply whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-300;
+  }
+
+  .td {
+    @apply whitespace-nowrap px-4 py-3 text-sm text-ink-100;
+  }
+
+  .num {
+    @apply font-mono tabular-nums;
+  }
+
+  .link {
+    @apply text-accent-400 underline-offset-2 hover:underline;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded bg-ink-800;
+  }
+
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-ink-700/40 to-transparent;
+    content: '';
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* Density preference, set on <html> by the layout toggle. Tables are the
+     only place vertical space actually matters, so scope it there. */
+  .compact .td {
+    @apply py-1.5;
+  }
+  .compact .th {
+    @apply py-1.5;
+  }
+  .compact .card-header {
+    @apply py-2.5;
+  }
+
+  /* Respect users who have asked the OS to reduce motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
